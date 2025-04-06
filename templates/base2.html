@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Quiz App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .dark-mode header {
+            background-color: #111;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dark-mode nav a {
+            color: #ddd;
+        }
+
+        .mode-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .dark-mode .mode-toggle {
+            color: #ddd;
+        }
+
+        .wrapper {
+            display: flex;
+            flex: 1;
+            padding-top: 80px; /* fixed header space */
+            padding-bottom: 60px; /* fixed footer space */
+        }
+
+        .sidebar {
+            background-color: #34495e;
+            color: white;
+            width: 200px;
+            padding: 20px;
+            min-height: calc(100vh - 140px);
+        }
+
+        .dark-mode .sidebar {
+            background-color: #222;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            margin: 10px 0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dark-mode main {
+            background-color: #2e2e2e;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .dark-mode footer {
+            background-color: #111;
+            color: #ccc;
+        }
+
+        /* ✅ Responsive fix */
+        @media (max-width: 768px) {
+            .wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+                text-align: center;
+                padding: 10px 0;
+            }
+
+            .sidebar a {
+                display: inline-block;
+                margin: 10px;
+            }
+
+            main {
+                width: 100%;
+                padding: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            nav {
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                margin: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔼 Header -->
+<header>
+    <div class="logo">
+        <h2>Quiz App</h2>
+    </div>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact Us</a>
+        <a href="{% url 'gallery' %}">Gallery</a>
+        <button class="mode-toggle" onclick="toggleMode()">🌓</button>
+    </nav>
+</header>
+
+<!-- 🔽 Main + Sidebar -->
+<div class="wrapper">
+    {% if request.path == '/' %}
+    <div class="sidebar">
+        <a href="/admin/">Admin Panel</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    {% endif %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+
+<!-- 🔻 Footer -->
+<footer>
+    <p>&copy; 2025 Quiz App. All rights reserved.</p>
+</footer>
+
+<!-- 🌙 Dark Mode Script -->
+<script>
+    function toggleMode() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('mode', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
+
+    window.onload = function () {
+        const mode = localStorage.getItem('mode');
+        if (mode === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    }
+</script>
+
+</body>
+</html>

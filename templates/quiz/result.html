@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInBody 1s ease-in;
+        }
+
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Result box */
+        .result-box {
+            flex: 1;
+            margin: 120px auto 90px auto; /* top, right/left auto, bottom */
+            padding: 40px 20px;
+            max-width: 700px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: fadeSlide 1s ease-in-out;
+        }
+        
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .pass, .fail {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .pass {
+            color: green;
+        }
+
+        .fail {
+            color: red;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-group a button {
+            padding: 12px 20px;
+            font-size: 15px;
+            border: none;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-group a button:hover {
+            background-color: #1a242f;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                justify-content: center;
+            }
+
+            nav a {
+                font-size: 14px;
+                margin: 5px;
+            }
+
+            .btn-group a button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="logo">
+        <h2>Quiz App</h2>
+    </div>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact Us</a>
+        <a href="{% url 'gallery' %}">Gallery</a>
+    </nav>
+</header>
+
+<!-- Result Box -->
+<div class="result-box">
+    <h2>📊 Quiz Result</h2>
+
+    <p><strong>Name:</strong> {{ user_name }}</p>
+    <p><strong>Total Questions:</strong> {{ total_questions }}</p>
+    <p><strong>Correct Answers:</strong> {{ correct_answers }}</p>
+    <p><strong>Incorrect Answers:</strong> {{ incorrect_answers }}</p>
+    <p><strong>Score:</strong> {{ score }}</p>
+
+    {% if passed %}
+        <h3 class="pass">🎉 Congratulations! You Passed! 🎉</h3>
+    {% else %}
+        <h3 class="fail">❌ You Failed! Try Again! ❌</h3>
+    {% endif %}
+
+    <div class="btn-group">
+        <a href="{% url 'download_pdf' user_name=user_name %}">
+            <button>📄 Download PDF Report</button>
+        </a>
+        <a href="{% url 'download_excel' user_name=user_name %}">
+            <button>📊 Download Excel Report</button>
+        </a>
+        <a href="{% url 'send_email' user_name=user_name %}">
+            <button>📧 Send Result to Email</button>
+        </a>
+        <a href="{% url 'quiz_list' %}">
+            <button>🏠 Back to Home</button>
+        </a>
+        <a href="{% url 'download_certificate' user_name=user_name %}">
+            <button>🎖️ Download Certificate</button>
+        </a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Quiz App. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

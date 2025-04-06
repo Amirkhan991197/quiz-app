@@ -1,0 +1,19 @@
+<h2>🏆 Leaderboard 🏆</h2>
+<table border="1">
+    <tr>
+        <th>Rank</th>
+        <th>User Name</th>
+        <th>Correct Answers</th>
+        <th>Total Attempts</th>
+    </tr>
+    {% for user in leaderboard_data %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ user.user_name }}</td>
+        <td>{{ user.correct_answers }}</td>
+        <td>{{ user.total_attempts }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'home' %}">Go Back</a>

@@ -1,0 +1,43 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}quiz{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'submit_quiz' %}">
+    {% csrf_token %}
+    <input type="hidden" name="user_name" value="Aamir">  <!-- Example user -->
+    
+    {% for question in questions %}
+        <p><b>{{ question.question_text }}</b></p>
+        <label><input type="radio" name="q{{ question.id }}" value="{{ question.option1 }}"> {{ question.option1 }}</label><br>
+        <label><input type="radio" name="q{{ question.id }}" value="{{ question.option2 }}"> {{ question.option2 }}</label><br>
+        <label><input type="radio" name="q{{ question.id }}" value="{{ question.option3 }}"> {{ question.option3 }}</label><br>
+        <label><input type="radio" name="q{{ question.id }}" value="{{ question.option4 }}"> {{ question.option4 }}</label><br>
+        <br>
+    {% endfor %}
+    
+    <button type="submit">Submit Quiz</button>
+    
+</form>
+
+
+<h2>🕒 Time Left: <span id="timer">30:00</span></h2>
+
+<script>
+    let timeLeft = 1800; // 30 minutes (1800 seconds)
+    function updateTimer() {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        document.getElementById("timer").innerText = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        if (timeLeft <= 0) {
+            alert("Time's up! Submitting your quiz...");
+            document.querySelector("form").submit();  // Auto-submit form
+        } else {
+            timeLeft--;
+            setTimeout(updateTimer, 1000);
+        }
+    }
+    updateTimer();
+</script>
+{% endblock %}

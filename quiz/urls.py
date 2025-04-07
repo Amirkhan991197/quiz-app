@@ -16,7 +16,7 @@ urlpatterns = [
     path('submit/', submit_quiz, name='submit_quiz'),
     path('', views.quiz_list, name='home'), # ✅ Yeh hona chahiye
 
-    path('run-migrations/', views.run_migrations),
+    # path('run-migrations/', views.run_migrations),
     
     # 🔐 Custom Login & Logout
     path('login/', custom_login, name='login'),

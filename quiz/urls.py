@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import run_migrations
 from .import views
 from .views import (
     custom_login, custom_logout, quiz_list, quiz_start, quiz_question, submit_quiz,about,contact,gallery,
@@ -16,6 +17,7 @@ urlpatterns = [
     path('submit/', submit_quiz, name='submit_quiz'),
     path('', views.quiz_list, name='home'), # ✅ Yeh hona chahiye
 
+    path('run-migrations/', views.run_migrations),
     
     # 🔐 Custom Login & Logout
     path('login/', custom_login, name='login'),

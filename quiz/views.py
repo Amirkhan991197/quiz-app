@@ -279,3 +279,12 @@ def gallery(request):
     return render(request, 'quiz/gallery.html');
 
 
+# for migration
+from django.core.management import call_command
+
+def run_migrations(request):
+    try:
+        call_command('migrate')
+        return HttpResponse("Migration successful ✅")
+    except Exception as e:
+        return HttpResponse(f"Migration failed ❌<br>{str(e)}")

@@ -1,26 +1,14 @@
 import os
 import dj_database_url
-
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-h36676td&(22p%#l-uzu3^lp!tyk-yd$o0%a9#m)bnz7+8qy1d'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-#ALLOWED_HOSTS = ['https://quiz-app-8xp8.onrender.com']
-
 ALLOWED_HOSTS = ['quiz-app-8xp8.onrender.com', '127.0.0.1', 'localhost']
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,30 +48,14 @@ TEMPLATES = [
     },
 ]
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "khanamir991197@gmail.com"  # Apna email likho
-EMAIL_HOST_PASSWORD = "dkpw jqrw cbqz duor"  # Apna email password likho
-
-
 WSGI_APPLICATION = 'quiz_app.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600
+    )
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -100,39 +72,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
+# ✅ STATIC FILES CONFIGURATION for Render
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ BASE_DIR / 'quiz' / 'static' ]  # where your CSS/JS lives
+STATIC_ROOT = BASE_DIR / 'staticfiles'               # where collectstatic will collect
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+# ✅ MEDIA FILES
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
+# ✅ LOGIN REDIRECTS
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
 
+# ✅ EMAIL CONFIG
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "khanamir991197@gmail.com"
+EMAIL_HOST_PASSWORD = "dkpw jqrw cbqz duor"  # App password if 2FA is on
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [ BASE_DIR / 'quiz' / 'static' ]
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

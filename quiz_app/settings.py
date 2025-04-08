@@ -4,17 +4,11 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-SECRET_KEY = os.getenv("django-insecure-h36676td&(22p%#l-uzu3^lp!tyk-yd$o0%a9#m)bnz7+8qy1d")
+SECRET_KEY = 'django-insecure-h36676td&(22p%#l-uzu3^lp!tyk-yd$o0%a9#m)bnz7+8qy1d'
 
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    'quiz-app-8xp8.onrender.com',
-    '127.0.0.1',
-    'localhost',
-    'quiz-app-cyan-zeta.vercel.app'  
-]
+ALLOWED_HOSTS = ['quiz-app-8xp8.onrender.com', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,7 +22,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,7 +96,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv("khanamir991197@gmail.com")
-EMAIL_HOST_PASSWORD = os.getenv("dkpw jqrw cbqz duor")
+EMAIL_HOST_USER = "khanamir991197@gmail.com"
+EMAIL_HOST_PASSWORD = "dkpw jqrw cbqz duor"  # App password if 2FA is on
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

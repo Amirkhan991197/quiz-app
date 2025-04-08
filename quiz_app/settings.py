@@ -8,7 +8,12 @@ SECRET_KEY = 'django-insecure-h36676td&(22p%#l-uzu3^lp!tyk-yd$o0%a9#m)bnz7+8qy1d
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['quiz-app-8xp8.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'quiz-app-8xp8.onrender.com',
+    '127.0.0.1',
+    'localhost',
+    'quiz-app-cyan-zeta.vercel.app'  
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,6 +27,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
